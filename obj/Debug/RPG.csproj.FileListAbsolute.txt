@@ -1,0 +1,14 @@
+C:\Users\karl_\source\repos\RPG\RPG\bin\Debug\RPG.exe.config
+C:\Users\karl_\source\repos\RPG\RPG\bin\Debug\RPG.exe
+C:\Users\karl_\source\repos\RPG\RPG\bin\Debug\RPG.pdb
+C:\Users\karl_\source\repos\RPG\RPG\obj\Debug\RPG.csproj.CoreCompileInputs.cache
+C:\Users\karl_\source\repos\RPG\RPG\obj\Debug\RPG.exe
+C:\Users\karl_\source\repos\RPG\RPG\obj\Debug\RPG.pdb
+C:\Users\Karl.Eckel\Desktop\RPG\RPG\bin\Debug\RPG.exe.config
+C:\Users\Karl.Eckel\Desktop\RPG\RPG\bin\Debug\RPG.exe
+C:\Users\Karl.Eckel\Desktop\RPG\RPG\bin\Debug\RPG.pdb
+C:\Users\Karl.Eckel\Desktop\RPG\RPG\obj\Debug\RPG.csprojAssemblyReference.cache
+C:\Users\Karl.Eckel\Desktop\RPG\RPG\obj\Debug\RPG.csproj.CoreCompileInputs.cache
+C:\Users\Karl.Eckel\Desktop\RPG\RPG\obj\Debug\RPG.exe
+C:\Users\Karl.Eckel\Desktop\RPG\RPG\obj\Debug\RPG.pdb
+C:\Users\karl_\source\repos\RPG\RPG\obj\Debug\RPG.csprojAssemblyReference.cache
