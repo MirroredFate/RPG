@@ -575,6 +575,7 @@ namespace RPG
                             Console.WriteLine(border);
                             Console.WriteLine("|| You leveled up!");
                             Console.WriteLine("|| You are now Level {0} !", player.level);
+                            CheckForNewSkills();
                             Console.WriteLine("|| Choose a Stat to Level up!");
                             Console.WriteLine(border);
 
@@ -1738,6 +1739,33 @@ namespace RPG
 
             #endregion
 
+            void CheckForNewSkills()
+            {
+                switch (player.GetClass())
+                {
+                    case "Knight":
+                        switch (player.level)
+                        {
+                            case 5:
+                                player.AddSkill(skillManager.GetSkill(105));
+                                Console.WriteLine("|| You've learned {0}!", skillManager.GetSkill(105).GetName());
+                                break;
+                        }
+                        break;
+                    case "Assassin":
+
+                        break;
+                    case "Archer":
+
+                        break;
+                    case "Mage":
+
+                        break;
+                    default:
+
+                        break;
+                }
+            }
 
         }
     }

@@ -16,6 +16,9 @@ namespace RPG
         int amountOfEnemies;
         int enemyID;
 
+        Enemy enemy;
+        EnemyManager em;
+
         public DungeonRoom(string name = "",int type = 0, int roomID = 0, int amountOfEnemies = 0,int enemyID = 0,int itemID = 0, int bossID = 0)
         {
             this.name = name;
@@ -47,7 +50,7 @@ namespace RPG
 
         #region Setters
 
-        public void SetType(int type)
+        public void SetRoomType(int type)
         {
             this.type = type;
         }

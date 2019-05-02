@@ -116,6 +116,15 @@ namespace RPG
 
             skillList.Add(piercingArrow);
             //-------------------------------------------------------
+            Skill execute = new Skill(
+                "Execute",   // Name
+                105,               // Skill ID
+                1,                 // Type | 1 = Physical / 2 = Magical
+                1,                 // Element Type | 1 = Normal, 2 = Fire, 3 = Water, 4 = Wind, 5 = Light, 6 = Dark
+                0,                 // Manacost
+                50);               // Damage
+
+            skillList.Add(execute);
 
             #endregion
 
