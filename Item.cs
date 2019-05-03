@@ -16,6 +16,7 @@ namespace RPG
         int amount;
         int dropChance;
 
+
         bool useable;
 
         public Item(string name = "no item", string description = "", int id = 0, bool useable = false, int price = 0, int amount = 0, int dropChance = 0)

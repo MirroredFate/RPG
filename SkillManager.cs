@@ -9,6 +9,7 @@ namespace RPG
     class SkillManager
     {
         List<Skill> skillList = new List<Skill>();
+        Dictionary<int, int> knightSkills = new Dictionary<int, int>();
 
         #region Getter
 
@@ -30,6 +31,12 @@ namespace RPG
             }
 
             return sk;
+        }
+
+        public Dictionary<int, int> GetKnightSkills()
+        {
+            AddKnightSkills();
+            return knightSkills;
         }
 
         #endregion
@@ -128,6 +135,28 @@ namespace RPG
 
             #endregion
 
+            #region Healing Skills
+            //-------------------------------------------------------
+            Skill calmingCry = new Skill(
+                "Calming Cry",   // Name
+                201,             // Skill ID
+                3,               // Type | 1 = Physical / 2 = Magical / 3 = Healing
+                1,               // Element Type | 1 = Normal, 2 = Fire, 3 = Water, 4 = Wind, 5 = Light, 6 = Dark
+                20,              // Manacost
+                0,               // Damage
+                1);              // EffectID  
+
+            skillList.Add(calmingCry);
+
+
+            #endregion
+
+        }
+
+        void AddKnightSkills()
+        {
+            knightSkills.Add(2, 201);
+            knightSkills.Add(5, 105);
         }
 
         #endregion

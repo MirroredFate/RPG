@@ -67,8 +67,10 @@ namespace RPG
 
         List<InventorySlot> inventory;
 
+        EffectManager em = new EffectManager();
+
         //Creating the Player
-        public Player(string name = "Player", string rpgClass = "Class", int level = 0)
+        public Player(string name = "Player", string rpgClass = "Class", int level = 1)
         {
             this.name = name;
             this.rpgClass = rpgClass;
@@ -463,6 +465,7 @@ namespace RPG
             {
                 this.experience = 0;
                 this.level++;
+                FullHeal();
 
                 this.maxExperience = (90 * level);
 
@@ -540,16 +543,30 @@ namespace RPG
 
         public int UseSkill(int slot)
         {
+            em.LoadEffects();
             usedSkill = true;
-            mana -= skills[slot].GetManaCost();
+            Skill sk = skills[slot];
+            mana -= sk.GetManaCost();
 
-            if(skills[slot].GetSkillType() == 1)
+            if(sk.GetSkillType() == 1)
             {
-                return skills[slot].GetDamage() * ((int)strength / 2) + Attack();
+                return sk.GetDamage() * ((int)strength / 2) + Attack();
+            }
+            else if(sk.GetSkillType() == 2)
+            {
+                return sk.GetDamage() * ((int)intelligence / 2) + Attack();
+            }
+            else if(sk.GetSkillType() == 3)
+            {
+                Effect ef = em.GetEffect(sk.GetEffectID());
+                em.UseHeal(ef.GetEffectID(), this);
+                Console.WriteLine(ef.GetUseText());
+
+                return 0;
             }
             else
             {
-                return skills[slot].GetDamage() * ((int)intelligence / 2) + Attack();
+                return 0;
             }
 
             
@@ -973,6 +990,23 @@ namespace RPG
         {
             health = maxHealth;
             mana = maxMana;
+        }
+
+        public void CheckForNewSkills(SkillManager sm)
+        {
+            Dictionary<int, int> dic = new Dictionary<int, int>();
+            switch (GetClass())
+            {
+                case "Knight":
+                    dic = sm.GetKnightSkills();
+                    if (dic.ContainsKey(level))
+                    {
+                        Skill sk = sm.GetSkill(dic[level]);
+                        AddSkill(sk);
+                        Console.WriteLine("|| You've learned {0}!", sk.GetName());
+                    }
+                    break;
+            }
         }
         #endregion
 

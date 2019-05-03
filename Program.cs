@@ -20,6 +20,7 @@ namespace RPG
             SkillManager skillManager = new SkillManager();
             ItemManager itemManager = new ItemManager();
             DungeonManager dungeonManager = new DungeonManager();
+            EffectManager effectManager = new EffectManager();
             List<Enemy> enemies = new List<Enemy>();
             List<Item> items = new List<Item>();
             Shop shop = new Shop();
@@ -29,6 +30,7 @@ namespace RPG
             enemyManager.LoadEnemies(skillManager, itemManager);
             skillManager.LoadSkills();
             itemManager.LoadItems();
+            effectManager.LoadEffects();
 
             Welcome();
 
@@ -560,7 +562,7 @@ namespace RPG
 
                         randomEnemy.SetKillCount(randomEnemy.GetKillCount() + 1);
                         player.GainExperience(randomEnemy.GetXP());
-                        player.SetGold(player.GetGold() + randomEnemy.GetGold());
+                        player.AddGold(randomEnemy.GetGold());
 
                         Console.WriteLine("|| You got {0} Gold!", randomEnemy.GetGold());
                         Console.WriteLine("|| You got {0} Experience!", randomEnemy.GetXP());
@@ -575,7 +577,7 @@ namespace RPG
                             Console.WriteLine(border);
                             Console.WriteLine("|| You leveled up!");
                             Console.WriteLine("|| You are now Level {0} !", player.level);
-                            CheckForNewSkills();
+                            player.CheckForNewSkills(skillManager);
                             Console.WriteLine("|| Choose a Stat to Level up!");
                             Console.WriteLine(border);
 
@@ -585,11 +587,11 @@ namespace RPG
                             string inte = "Increases elemental damage dealt and your maximum Mana";
                             string spd = "If you have more speed than your enemy, you attack first";
 
-                            Console.WriteLine("|| [1] Stamina - {0,10}", stam);
-                            Console.WriteLine("|| [2] Defense  - {0,10}", def);
-                            Console.WriteLine("|| [3] Strength  - {0,10}", str);
-                            Console.WriteLine("|| [4] Intelligence  - {0,10}", inte);
-                            Console.WriteLine("|| [5] Speed  - {0,10}", spd);
+                            Console.WriteLine(String.Format("|| [1] Stamina - {0,10}", stam));
+                            Console.WriteLine(String.Format("|| [2] Defense  - {0,10}", def));
+                            Console.WriteLine(String.Format("|| [3] Strength  - {0,10}", str));
+                            Console.WriteLine(String.Format("|| [4] Intelligence  - {0,10}", inte));
+                            Console.WriteLine(String.Format("|| [5] Speed  - {0,10}", spd));
                             Console.WriteLine(border);
                             
                             LevelUp:
@@ -1541,9 +1543,19 @@ namespace RPG
                     string sLevel = player.GetSkills()[i].GetLevelText();
                     int sDamage = player.GetSkills()[i].GetDamage();
                     int sManaCost = player.GetSkills()[i].GetManaCost();
-
-                    Console.WriteLine("|| [{0}] {1}{2} | {3} | Base Damage: {4} | Mana Cost: {5}", i+1, sName, sLevel, sElement, sDamage, sManaCost);
+                    if(player.GetSkills()[i].GetSkillType() == 3)
+                    {
+                        int sHealAmount = effectManager.GetEffect(player.GetSkills()[i].GetEffectID()).GetHealAmount();
+                        Console.WriteLine("|| [{0}] {1}{2} | {3} | Base Heal: {4} | Mana Cost: {5}", i + 1, sName, sLevel, sElement, sHealAmount, sManaCost);
+                    }
+                    else
+                    {
+                        Console.WriteLine("|| [{0}] {1}{2} | {3} | Base Damage: {4} | Mana Cost: {5}", i + 1, sName, sLevel, sElement, sDamage, sManaCost);
+                    }
+                    
                 }
+                Console.WriteLine(border);
+                Console.WriteLine("|| Mana: {0}", player.GetMana());
                 Console.WriteLine(border);
                 Console.WriteLine("|| Choose a Skill by typing the Number of the Skill.");
                 Console.WriteLine("|| Or press Enter to return to the Fight");
@@ -1590,34 +1602,46 @@ namespace RPG
                     }
                     else
                     {
-                        if (player.GetSpeed() > randomEnemy.GetSpeed())
+                        if(player.GetSkills()[slot - 1].GetSkillType() == 3)
                         {
-                            Attack(player.UseSkill(slot - 1), 1, player.GetSkills()[slot - 1]);
-                            if (!randomEnemy.IsDead())
-                            {
-                                EnemyAttack();
-                                if (player.IsDead()) GameOver();
-                            }
-
-
+                            player.UseSkill(slot - 1);
+                            Console.WriteLine(border);
                             Console.WriteLine("|| Press Enter to Continue");
-
                             Console.ReadLine();
-                            FightEnemyMenu();
+                            ChooseSkill();
                         }
                         else
                         {
-                            if (!randomEnemy.IsDead())
+                            if (player.GetSpeed() > randomEnemy.GetSpeed())
                             {
-                                EnemyAttack();
-                                if (player.IsDead()) GameOver();
+                                Attack(player.UseSkill(slot - 1), 1, player.GetSkills()[slot - 1]);
+                                if (!randomEnemy.IsDead())
+                                {
+                                    EnemyAttack();
+                                    if (player.IsDead()) GameOver();
+                                }
+
+
+                                Console.WriteLine("|| Press Enter to Continue");
+
+                                Console.ReadLine();
+                                FightEnemyMenu();
                             }
-                            Attack(player.UseSkill(slot - 1), 1, player.GetSkills()[slot - 1]);
+                            else
+                            {
+                                if (!randomEnemy.IsDead())
+                                {
+                                    EnemyAttack();
+                                    if (player.IsDead()) GameOver();
+                                }
+                                Attack(player.UseSkill(slot - 1), 1, player.GetSkills()[slot - 1]);
 
-                            Console.WriteLine("|| Press Enter to Continue");
+                                Console.WriteLine("|| Press Enter to Continue");
 
-                            Console.ReadLine();
-                            FightEnemyMenu();
+                                Console.ReadLine();
+                                FightEnemyMenu();
+                            }
+                       
                         }
                     }
                    
@@ -1739,33 +1763,7 @@ namespace RPG
 
             #endregion
 
-            void CheckForNewSkills()
-            {
-                switch (player.GetClass())
-                {
-                    case "Knight":
-                        switch (player.level)
-                        {
-                            case 5:
-                                player.AddSkill(skillManager.GetSkill(105));
-                                Console.WriteLine("|| You've learned {0}!", skillManager.GetSkill(105).GetName());
-                                break;
-                        }
-                        break;
-                    case "Assassin":
-
-                        break;
-                    case "Archer":
-
-                        break;
-                    case "Mage":
-
-                        break;
-                    default:
-
-                        break;
-                }
-            }
+          
 
         }
     }

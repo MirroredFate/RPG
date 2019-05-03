@@ -33,6 +33,7 @@ namespace RPG
 
         bool usedSkill;
         bool didCrit;
+        bool executable;
 
         List<Skill> skills;
         List<Item> items;

@@ -8,6 +8,7 @@ namespace RPG
 {
     class ItemManager
     {
+        EffectManager em = new EffectManager();
         List<Item> itemList = new List<Item>();
 
         #region Getter
@@ -177,6 +178,7 @@ namespace RPG
 
         public void UseItem(Item item, Player player)
         {
+            em.LoadEffects();
             switch (item.GetItemID())
             {
                 //Small Health Potion

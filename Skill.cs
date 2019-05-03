@@ -10,15 +10,15 @@ namespace RPG
     {
         string name;
         int id;
-        int type; //1 - Physical | 2 - Elemental
+        int type; //1 - Physical | 2 - Elemental | 3 - Healing
         int elementType; //1 = Normal, 2 = Fire, 3 = Water, 4 = Wind, 5 = Light, 6 = Dark
-
         int manaCost; //How much Mana the Skill costs
         int level;
+        int effectID;
 
         int damage;
 
-        public Skill(string name = "No skill equipped", int id = 0, int type = 0, int elementType = 0, int manaCost = 0, int damage = 0)
+        public Skill(string name = "No skill equipped", int id = 0, int type = 0, int elementType = 0, int manaCost = 0, int damage = 0, int effectID = 0)
         {
             this.name = name;
             this.id = id;
@@ -35,6 +35,7 @@ namespace RPG
 
             this.damage = damage;
             this.level = 0;
+            this.effectID = effectID;
         }
 
                 
@@ -138,6 +139,11 @@ namespace RPG
         public int GetLevel()
         {
             return level;
+        }
+
+        public int GetEffectID()
+        {
+            return effectID;
         }
 
         #endregion
