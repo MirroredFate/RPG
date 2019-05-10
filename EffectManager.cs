@@ -32,6 +32,15 @@ namespace RPG
                 );
             effectList.Add(mediumHeal);
             //-----------------------------------
+            Effect highHeal = new Effect(
+                3,  //ID
+                2,  //Type (1 - Attack | 2 - Heal)
+                600, //Heal Amount
+                0,  //Damage Amount
+                "|| Restored 600 Health!"
+                );
+            effectList.Add(highHeal);
+            //-----------------------------------
             #endregion
         }
 

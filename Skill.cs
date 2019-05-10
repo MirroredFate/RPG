@@ -37,8 +37,7 @@ namespace RPG
             this.level = 0;
             this.effectID = effectID;
         }
-
-                
+     
         #region Setter
 
         public void SetName(string name)
