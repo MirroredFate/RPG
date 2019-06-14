@@ -21,6 +21,7 @@ namespace RPG
             ItemManager itemManager = new ItemManager();
             DungeonManager dungeonManager = new DungeonManager();
             EffectManager effectManager = new EffectManager();
+            BattleManager battleManager = new BattleManager();
             List<Enemy> enemies = new List<Enemy>();
             List<Item> items = new List<Item>();
             Shop shop = new Shop();
@@ -213,13 +214,14 @@ namespace RPG
                 Console.WriteLine(border);
                 Console.WriteLine("||                                  ");
                 Console.WriteLine("|| [1] Fight Random Enemy         ");
-                Console.WriteLine("|| [2] Shop");
-                Console.WriteLine("|| [3] Smith");
+                Console.WriteLine("|| [2] Enter Dungeon         ");
+                Console.WriteLine("|| [3] Shop");
+                Console.WriteLine("|| [4] Smith");
                 Console.WriteLine("||                                  ");
-                Console.WriteLine("|| [4] Show Equipment         ");
-                Console.WriteLine("|| [5] Show Stats             ");
-                Console.WriteLine("|| [6] Show Skills             ");
-                Console.WriteLine("|| [7] Show Inventory             ");
+                Console.WriteLine("|| [5] Show Equipment         ");
+                Console.WriteLine("|| [6] Show Stats             ");
+                Console.WriteLine("|| [7] Show Skills             ");
+                Console.WriteLine("|| [8] Show Inventory             ");
                 Console.WriteLine("||                                  ");
                 Console.WriteLine("|| [X] Close Game             ");
                 Console.WriteLine("||                                  ");
@@ -234,24 +236,36 @@ namespace RPG
                         int random = rng.Next(0, enemies.Count);
                         randomEnemy = enemies[random];
 
-                        FightEnemyMenu();
+                        battleManager.StartBattle(player, randomEnemy);
+                        if (battleManager.getWon())
+                        {
+                            enemyManager.LoadEnemies(skillManager, itemManager);
+                            MainMenu();
+                        }
+                        else if (battleManager.getGameOver())
+                        {
+                            Welcome();
+                        }
                         break;
                     case "2":
-                        ShopMenu();
+                        DungeonMenu();
                         break;
                     case "3":
-                        UpgradeMenu();
+                        ShopMenu();
                         break;
                     case "4":
-                        EquipmentMenu();
+                        UpgradeMenu();
                         break;
                     case "5":
-                        StatMenu();
+                        EquipmentMenu();
                         break;
                     case "6":
-                        SkillMenu();
+                        StatMenu();
                         break;
                     case "7":
+                        SkillMenu();
+                        break;
+                    case "8":
                         InventoryMenu();
                         break;
                     case "g":
@@ -948,6 +962,11 @@ namespace RPG
                     goto UpgradeMenu;
                 }
                 
+
+            }
+
+            void DungeonMenu()
+            {
 
             }
 

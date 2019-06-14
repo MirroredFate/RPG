@@ -67,7 +67,17 @@ namespace RPG
             rooms.Add(fireSlimeRoom);
             //-------------------------------------------------------------------
 
+            DungeonRoom saveRoom = new DungeonRoom(
+                "Save Room",          // Name
+                2,                    // Type | 1 = EnemyRoom | 2 = SaveRoom | 3 = TreasureRoom(Item) | 4 = TreasureRoom(Equipment) | 5 = BossRoom
+                3,                    // ID
+                0,                    // Amount of Enemies
+                0,                    // EnemyID
+                0,                    // ItemID
+                0);                   // BossID
 
+            rooms.Add(saveRoom);
+            //-------------------------------------------------------------------
 
         }
 
